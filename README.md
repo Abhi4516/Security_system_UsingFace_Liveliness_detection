@@ -34,7 +34,7 @@ The core idea is to detect the face and classify it as "live" or "spoofed" using
 
 ### A. Model Framework
 
-The proposed system combines **Face Net** with liveliness detection. The model uses a **Haar Cascade Classifier** to detect faces in real-time. Once the face is detected, the system determines whether the face is real or fake using a liveliness detection technique.
+The proposed system combines **Dlib** with liveliness detection. The model uses a **Haar Cascade Classifier** to detect faces in real-time. Once the face is detected, the system determines whether the face is real or fake using a liveliness detection technique.
 
 Liveliness detection differentiates between live and non-living features. The key goal is to detect faces and eyes in real time. Here, the **Haar Cascade Classifier** is employed for object detection tasks like face and eye detection. This classifier is a machine learning-based algorithm for detecting objects in images or videos.
 
