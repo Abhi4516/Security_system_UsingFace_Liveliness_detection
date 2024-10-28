@@ -16,41 +16,8 @@ for filename in os.listdir("dataset"):
 	known_face_encodings.append(face_recognition.face_encodings(face_recognition.load_image_file("dataset/"+filename))[0])
 	known_face_names.append(filename.split('.')[0])
 	i = i + 1
-'''
-f1_image = face_recognition.load_image_file("Akash.jpg")
-f1_face_encoding = face_recognition.face_encodings(f1_image)[0]
 
-f2_image = face_recognition.load_image_file("Omkar.jpg")
-f2_face_encoding = face_recognition.face_encodings(f2_image)[0]
 
-f3_image = face_recognition.load_image_file("Shubham.jpg")
-f3_face_encoding = face_recognition.face_encodings(f3_image)[0]
-
-f4_image = face_recognition.load_image_file("Shubhankar.jpg")
-f4_face_encoding = face_recognition.face_encodings(f4_image)[0]
-
-known_face_encodings = [
-    f1_face_encoding,  
-    f2_face_encoding,
-    f3_face_encoding,  
-    f4_face_encoding,
-   
- 
-]
-known_face_names = [
-    "Akash",  
-    "Omkar",
-    "Shubham",
-    "Shubhankar",
-    
-    
-]
-
-face_locations = []
-face_encodings = []
-face_names = []
-
-'''
 process_this_frame = True
 
 def get_frame():

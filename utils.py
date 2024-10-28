@@ -3,7 +3,7 @@ import cv2
 import time
 import os
 import imutils
-from blinks import *  # Assuming `blinks` defines `detector`, `predictor`, `BLINK_RATIO_THRESHOLD`, etc.
+from blinks import *  
 
 process_this_frame = True
 
@@ -33,7 +33,7 @@ def faceRecognition():
 
     face_locations = face_recognition.face_locations(rgb_small_frame)
     face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
-    people = len(face_locations)  # Number of detected faces
+    people = len(face_locations)  
 
     face_names = []
     for face_encoding in face_encodings:
@@ -62,7 +62,7 @@ def video_feed():
         frame = imutils.resize(frame, width=400)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5, minSize=(20, 20))
-        people = len(faces)  # Update global people count
+        people = len(faces)  
 
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
