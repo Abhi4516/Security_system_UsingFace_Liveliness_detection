@@ -1,16 +1,13 @@
-
+# import the necessary packages
 from flask import Flask, render_template, redirect, url_for, request,session,Response
-
 import os
 import cv2
 from utils import *
 import pandas as pd
 from playsound import playsound
 import sqlite3
-from werkzeug.utils import secure_filename
-import face_recognition
-from sms import *
-
+#from sms import *
+#camerafrom arduino import *
 
 username=''
 password=''
@@ -59,7 +56,7 @@ def register1():
 		username = request.form['username']
 		password = request.form['password']
 
-		con = sqlite3.connect('banklocker.db')
+		con = sqlite3.connect('locker.db')
 		cursorObj = con.cursor()
 		cursorObj.execute("CREATE TABLE IF NOT EXISTS Users (UserName text,Password text)")
 		cursorObj.execute("INSERT INTO Users VALUES(?,?)",(username,password))
@@ -83,7 +80,7 @@ def login():
 		username = request.form['username']
 		password = request.form['password']
 
-		con = sqlite3.connect('banklocker.db')
+		con = sqlite3.connect('locker.db')
 		cursorObj = con.cursor()
 		cursorObj.execute(f"SELECT UserName from Users WHERE UserName='{username}' AND password = '{password}';")
 	
@@ -108,19 +105,19 @@ def login1():
 		if(blink == 'Eye Blinking Detected..!!'):
 			if(people > 1):
 				error = 'Multiple Faces Detected, Plz Try again..!!'
-			
+				#sendSMS('Multiple Faces Detected for Locker:'+username)
 			elif(people == 0):
 				error = 'Unknown Face Detected Plz Try again..!!'
-			
+				#sendSMS('Multiple Faces Detected for Locker:'+username)
 			else:
 				if(face[0] == username):
 					return redirect(url_for('locker'))
 				else:
 					error = 'Unknown Face Detected Plz Try again..!!'
-					
+					#sendSMS('Multiple Faces Detected for Locker:'+username)
 		else:
 			error = 'No Live Face Found'
-						
+			#sendSMS('Live Face Not Found for Locker:'+username)			
 
 	return render_template('login1.html',username=username,password= password,error=error)
 
@@ -128,7 +125,7 @@ def login1():
 
 @app.route('/locker')
 def locker():
-	
+	#sendSerial(b'O')
 	return render_template('locker.html')
 
 @app.route('/video_stream')
@@ -137,10 +134,10 @@ def video_stream():
 	return Response(video_feed(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-
+# No caching at all for API endpoints.
 @app.after_request
 def add_header(response):
-
+	# response.cache_control.no_store = True
 	response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
 	response.headers['Pragma'] = 'no-cache'
 	response.headers['Expires'] = '-1'
@@ -148,4 +145,4 @@ def add_header(response):
 
 
 if __name__ == '__main__':
-	app.run(host='127.0.0.1')
+	app.run(host='0.0.0.0', debug=True, threaded=True)
